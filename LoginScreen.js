@@ -4,13 +4,16 @@ var {
     Component,
     Text,
     TextInput,
-    TouchableHighlight,
+    TouchableOpacity,
     Alert,
+    Image,
     View,
     PropTypes,
     StyleSheet,
     ToastAndroid
 } = React;
+
+var Dimensions = require('Dimensions');
 
 import IndexScreen from "./IndexScreen";
 
@@ -35,83 +38,91 @@ class LoginScreen extends Component {
 
     }
 
-      constructor (props) {
+    constructor (props) {
         super (props)
         this.state = {
           txtValue: "",
           pswValue: ""
         }
     }
+
+    loginClick() {
+
+    }
+
+    registerClick() {
+
+    }
+
+    demoClick() {
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'index',
+                index: IndexScreen,
+            });
+        }
+    }
+
     render () {
         var { style, txt, psw } = this.props;
 
         return(
             <View style={styles.container}>
-                <View style={styles.txtBorder}>
-                    <Text style={styles.txtName}>{txt.name}</Text>
-                    <TextInput
-                        underlineColorAndroid = {'transparent'}
-                        style={styles.textInput}
-                        multiline={false}
-                        placeholder={txt.txtHide}
-                        password={txt.ispassword}
-                        onChangeText={(text) => {
-                            this.setState({
-                                txtValue: text
-                            })
-                        }}
-                        value={this.state.txtValue}
-                    />
+                <Image source={require('./image/login_bg.jpg')} style={styles.imgStyle}></Image>
+                <View style={styles.btnWrap}>
+                    <View style={styles.txtBorder}>
+                        <Text style={styles.txtName}>{txt.name}</Text>
+                        <TextInput
+                            underlineColorAndroid = {'transparent'}
+                            style={styles.textInput}
+                            multiline={false}
+                            placeholder={txt.txtHide}
+                            password={txt.ispassword}
+                            onChangeText={(text) => {
+                                this.setState({
+                                    txtValue: text
+                                })
+                            }}
+                            value={this.state.txtValue}
+                        />
+                    </View>
+                    <View style={styles.txtBorder}>
+                        <Text style={styles.txtName}>{psw.name}</Text>
+                        <TextInput
+                            underlineColorAndroid = {'transparent'}
+                            style={styles.textInput}
+                            multiline={false}
+                            placeholder={psw.txtHide}
+                            password={psw.ispassword}
+                            onChangeText={(text) => {
+                                this.setState({
+                                    pswValue: text
+                                })
+                            }}
+                            value={this.state.pswValue}
+                        />
+                    </View>
+                        <TouchableOpacity
+                            style={styles.demoStyle}
+                            onPress={this.demoClick.bind(this)}>
+                            <Text style={{color: '#CE0000'}}>体验演示版</Text>
+                            <Text style={styles.iconStyle}>&#xe608;</Text>
+                        </TouchableOpacity>
+
+                    <View style={styles.btnsRow}>
+                        <TouchableOpacity
+                            style={styles.btn}
+                            onPress={this.demoClick.bind(this)}>
+                            <View style={styles.btnTxt}><Text style={{fontSize: 16,color: '#fff'}}>登录</Text></View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.btn}
+                            onPress={this.demoClick.bind(this)}>
+                            <View style={styles.btnTxt}><Text style={{fontSize: 16,color: '#fff'}}>注册</Text></View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={styles.txtBorder}>
-                    <Text style={styles.txtName}>{psw.name}</Text>
-                    <TextInput
-                        underlineColorAndroid = {'transparent'}
-                        style={styles.textInput}
-                        multiline={false}
-                        placeholder={psw.txtHide}
-                        password={psw.ispassword}
-                        onChangeText={(text) => {
-                            this.setState({
-                                pswValue: text
-                            })
-                        }}
-                        value={this.state.pswValue}
-                    />
-                </View>
-                <Text>体验演示版</Text>
-                <TouchableHighlight
-                    style={styles.btnWrap}
-                    onPress={
-                    ()=> {
-                        Alert.alert(
-                            `你点击了按钮`,
-                            'Hello World！',
-                            [
-                                {text: '以后再说', onPress: () => console.log('Ask me later pressed')},
-                                {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                                {text: '确定', onPress: () => console.log('OK Pressed')},
-                            ]
-                        )
-                    }
-                }>
-                    <View style={styles.btnTxt}><Text>登录</Text></View>
-                </TouchableHighlight>
-                <TouchableHighlight
-                    style={styles.btnWrap}
-                    onPress={
-                    ()=> {
-                        const {navigator} = this.props;
-                        if (navigator) {
-                            navigator.push({
-                                name: 'index',
-                                index: IndexScreen,
-                            });
-                        }
-                    }
-                }>
-                    <View style={styles.btnTxt}><Text>注册</Text></View>
-                </TouchableHighlight>
             </View>
         )
     }
@@ -122,6 +133,16 @@ class LoginScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: '#F8F6D5'
+    },
+    imgStyle: {
+        width:Dimensions.get('window').width,
+        height:Dimensions.get('window').width
+    },
+    btnWrap: {
+        position: 'absolute',
+        bottom: 5,
         alignItems: 'center',
     },
     txtBorder: {
@@ -131,6 +152,8 @@ const styles = StyleSheet.create({
         borderColor: '#238E23',
         marginLeft: 50,
         marginRight: 50,
+        marginTop:5,
+        marginBottom:10,
         borderRadius: 25,
         flexDirection: 'row'
     },
@@ -147,20 +170,35 @@ const styles = StyleSheet.create({
         height: 50,
         width: 200
     },
-    btnWrap: {
+    btnsRow: {
+        flexDirection: 'row',
+        width: 270,
+        margin: 10
+    },
+    btn: {
+        flex:1,
         height: 50,
-        width: 200,
-        flex: 1,
         backgroundColor: '#238E23',
-        marginLeft: 50,
-        marginRight: 50,
         borderRadius: 25,
+        marginLeft: 5,
     },
     btnTxt: {
-        height: 50,
+        height: 40,
         flex: 1,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+    },
+    demoStyle: {
+        flex: 1,
+        marginLeft: 50,
+        marginRight: 50,
+        flexDirection: 'row',
+    },
+    iconStyle:{
+        fontFamily:'iconfont',
+        flex: 1,
+        textAlign: 'right',
+        color: '#CE0000'
     }
 })
 

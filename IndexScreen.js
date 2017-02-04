@@ -124,7 +124,7 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#D0E474',
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   toolbar: {
     backgroundColor: '#238E23',
