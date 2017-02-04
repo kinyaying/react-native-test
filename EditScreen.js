@@ -6,6 +6,7 @@ var {
   Image,
   StyleSheet,
   Text,
+  TextInput,
   Alert,
   View,
   Image,
@@ -26,8 +27,7 @@ var Dimensions = require('Dimensions');
 var DRAWER_REF = 'drawer';
 var DRAWER_WIDTH_LEFT = 56;
 var toolbarActions = [
- {title:'weibo',icon:require('./image/icon_search.png'),show:'always'},
- {title:'blog',icon:require('./image/icon_scan.png'),show:'always'},
+ {title:'weibo',icon:require('./image/icon_help.png'),show:'always'},
 ];
 
 var EditScreen = React.createClass({
@@ -47,73 +47,128 @@ var EditScreen = React.createClass({
       />
     );
   },
-  onRefresh: function() {
-    this.onSelectTheme(this.state.theme);
+  onActionSelected: function(position) {
+    if(position === 0) {
+        Alert.alert(
+           `温馨提示`,
+           '请记录您的碳排放量。',
+           [
+               {text: '确定', onPress: () => console.log('OK Pressed')},
+           ]
+       );
+    }
+
   },
-  onRefreshFinish: function() {
-    this.swipeRefreshLayout && this.swipeRefreshLayout.finishRefresh();
-  },
-  onPressCallback: function() {
+  onSubmitClick: function() {
     Alert.alert(
-                               `你点击1111了按钮`,
-                               'Hello World！',
-                               [
-                                   {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                                   {text: '确定', onPress: () => console.log('OK Pressed')},
-                               ]
-                           )
+       `提交`,
+       '提交成功',
+       [
+           {text: '确定', onPress: () => console.log('OK Pressed')},
+       ]
+    );
+  },
+  defaultData: {
+      category: {
+          name: '分类',
+          txtHide: '',
+          ispassword: false,
+      },
+      number: {
+          name: '数量',
+          txtHide: '请输入数量',
+          ispassword: false,
+      },
+      date: {
+          name: '日期',
+          txtHide: '2017-01-02',
+          ispassword: false,
+      }
+
   },
   render: function() {
     var title = '记录碳排放量';
+    var {category, number, date } = this.defaultData;
     return (
-      <DrawerLayoutAndroid
-        ref={DRAWER_REF}
-        drawerWidth={Dimensions.get('window').width - DRAWER_WIDTH_LEFT}
-        keyboardDismissMode="on-drag"
-        drawerPosition={DrawerLayoutAndroid.positions.Left}
-        renderNavigationView={this._renderNavigationView}>
         <View style={styles.container}>
           <ToolbarAndroid
             title={title}
             titleColor="white"
             style={styles.toolbar}
             actions={toolbarActions}
-            logo={require('./image/icon_map.png')}
-            onIconClicked={() => this.refs[DRAWER_REF].openDrawer()}
-            onActionSelected={this.onActionSelected} />
-            <Image source={require('./image/index_bg.jpg')} style={styles.imgStyle}></Image>
-            <View style={styles.colStyle}>
-                <TouchableOpacity style={[styles.cellStyle,styles.bg1]} onPress={this.onPressCallback}>
-                    <Text style={styles.iconStyle}>&#xe69e;</Text>
-                    <Text style={styles.txtStyle}>衣服</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.cellStyle,styles.bg2]} onPress={this.onPressCallback}>
-                    <Text style={styles.iconStyle}>&#xe780;</Text>
-                    <Text style={styles.txtStyle}>食品</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.colStyle}>
-                <TouchableOpacity style={[styles.cellStyle,styles.bg3]} onPress={this.onPressCallback}>
-                    <Text style={styles.iconStyle}>&#xe6d9;</Text>
-                    <Text style={styles.txtStyle}>住房</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.cellStyle,styles.bg4]} onPress={this.onPressCallback}>
-                    <Text style={styles.iconStyle}>&#xe613;</Text>
-                    <Text style={styles.txtStyle}>出行</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.colStyle}>
-                <TouchableOpacity style={[styles.cellStyle,styles.bg5]} onPress={this.onPressCallback}>
-                    <Text style={styles.iconStyle}>&#xe60a;</Text>
-                    <Text style={styles.txtStyle}>生活用品</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.cellStyle,styles.bg6]} onPress={this.onPressCallback}>
-                    <Text style={styles.iconStyle}>&#xe611;</Text>
-                    <Text style={styles.txtStyle}>其他</Text>
-                </TouchableOpacity>
-            </View>
+            navIcon={require('./image/icon_back.png')}
+            onIconClicked={() => {
+               const {navigator} = this.props;
+               if (navigator) {
+                 navigator.pop();
+               }
+            }}
+            onActionSelected={this.onActionSelected}
+          />
+             <Text style={styles.txtTip}>请记录您的碳排放量，低碳生活每一天^_^。</Text>
+
+          <View style={styles.btnWrap}>
+             <View style={styles.txtBorder}>
+                 <View style={styles.txtLeft}>
+                     <Text style={styles.txtInner}>{category.name}</Text>
+                     <Text style={styles.iconStyle}>&#xe64a;</Text>
+                 </View>
+                 <TextInput
+                     underlineColorAndroid = {'transparent'}
+                     style={styles.textInput}
+                     multiline={false}
+                     placeholder={category.txtHide}
+                     password={category.ispassword}
+                     onChangeText={(text) => {
+                         this.setState({
+                             categoryValue: text
+                         })
+                     }}
+                     value={this.state.categoryValue}
+                 />
+             </View>
+             <View style={styles.txtBorder}>
+                 <Text style={styles.txtName}>{number.name}</Text>
+                 <TextInput
+                     underlineColorAndroid = {'transparent'}
+                     style={styles.textInput}
+                     multiline={false}
+                     placeholder={number.txtHide}
+                     password={number.ispassword}
+                     onChangeText={(text) => {
+                         this.setState({
+                             numberValue: text
+                         })
+                     }}
+                     value={this.state.numberValue}
+                 />
+             </View>
+             <View style={styles.txtBorder}>
+                  <Text style={styles.txtName}>{date.name}</Text>
+                  <TextInput
+                      underlineColorAndroid = {'transparent'}
+                      style={styles.textInput}
+                      multiline={false}
+                      placeholder={date.txtHide}
+                      password={date.ispassword}
+                      onChangeText={(text) => {
+                          this.setState({
+                              dateValue: text
+                          })
+                      }}
+                      value={this.state.dateValue}
+                  />
+              </View>
+
+          </View>
+          <View style={styles.btnStyle}>
+               <TouchableOpacity
+                   style={styles.btn}
+                   onPress={this.onSubmitClick}>
+                   <Text style={{fontSize: 16,color: '#fff'}}>提交</Text>
+               </TouchableOpacity>
+           </View>
         </View>
-      </DrawerLayoutAndroid>
 
     );
   }
@@ -123,60 +178,106 @@ var EditScreen = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'rgba(0,0,0,0)',
+    backgroundColor: '#F8F6D5',
   },
   toolbar: {
     backgroundColor: '#238E23',
     height: 56,
   },
-  imgStyle: {
-    width:Dimensions.get('window').width,
-    height:150
+  txtTip: {
+    color: '#238E23',
+    fontSize: 20
   },
-  colStyle: {
+  btnStyle: {
     flex: 1,
-    flexDirection: 'row',
-  },
-  cellStyle: {
-    flex: 1,
-    height: 120,
+    height: 50,
+    width: 262,
+    backgroundColor: '#238E23',
+    marginLeft: 50,
+    marginRight: 50,
+    borderRadius: 25,
     justifyContent:'center',
     alignItems:'center',
-    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 20
   },
-  txtStyle: {
-    flex: 2,
-    color: '#fff',
-    fontSize: 24,
-    marginLeft:10,
-    fontFamily:'Times'
+  btnWrap: {
+    alignItems: 'center',
+    position:'absolute',
+    top: 100
   },
-  iconStyle: {
-    color: '#fff',
-    fontFamily:'iconfont',
-    fontSize: 30,
-    flex: 1,
-    textAlign: 'right'
-  },
-  bg1: {
-    backgroundColor: '#D5E7A2'
-  },
-  bg2: {
-    backgroundColor: '#B2D061'
-  },
-  bg3: {
-    backgroundColor: '#DCC78E'
-  },
-  bg4: {
-    backgroundColor: '#B5B149'
-  },
-  bg5: {
-      backgroundColor: '#B48454'
+    txtBorder: {
+        height: 50,
+        flex: 1,
+        borderWidth: 1,
+        borderColor: '#238E23',
+        marginLeft: 50,
+        marginRight: 50,
+        marginTop:5,
+        marginBottom:10,
+        borderRadius: 25,
+        flexDirection: 'row'
     },
-  bg6: {
-      backgroundColor: '#6A7E3D'
+    txtLeft:{
+       flexDirection: 'row',
+       justifyContent:'center',
+       alignItems:'center',
+    },
+    txtInner:{
+        height: 20,
+        width: 40,
+        color: '#238E23',
+        fontSize: 14,
+        marginLeft: 20,
+    },
+    txtName: {
+        height: 20,
+        width: 40,
+        marginLeft: 20,
+        marginTop: 15,
+        color: '#238E23',
+        marginRight: 10,
+        fontSize: 14
+    },
+    textInput: {
+        height: 50,
+        width: 200
+    },
+    btnsRow: {
+        flexDirection: 'row',
+        width: 270,
+        margin: 10
+    },
+    btn: {
+        flex:1,
+        height: 50,
+        backgroundColor: '#238E23',
+        borderRadius: 25,
+        marginLeft: 5,
+        justifyContent:'center',
+        alignItems:'center',
+
+    },
+    btnTxt: {
+        height: 40,
+        flex: 1,
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    demoStyle: {
+        flex: 1,
+        marginLeft: 50,
+        marginRight: 50,
+        flexDirection: 'row',
+    },
+    iconStyle:{
+        fontFamily:'iconfont',
+        alignItems:'center',
+        justifyContent:'center',
+        color: '#238E23',
+        fontSize: 14,
     }
+
 });
 
 module.exports = EditScreen;
