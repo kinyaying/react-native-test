@@ -53,6 +53,16 @@ var IndexScreen = React.createClass({
   onRefreshFinish: function() {
     this.swipeRefreshLayout && this.swipeRefreshLayout.finishRefresh();
   },
+  onPressCallback: function() {
+    Alert.alert(
+                               `你点击1111了按钮`,
+                               'Hello World！',
+                               [
+                                   {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                                   {text: '确定', onPress: () => console.log('OK Pressed')},
+                               ]
+                           )
+  },
   render: function() {
     var title = '合肥';
     return (
@@ -73,33 +83,33 @@ var IndexScreen = React.createClass({
             onActionSelected={this.onActionSelected} />
             <Image source={require('./image/index_bg.jpg')} style={styles.imgStyle}></Image>
             <View style={styles.colStyle}>
-                <TouchableOpacity style={styles.iconStyle} onPress={
-                   ()=> {
-                       Alert.alert(
-                           `你点击了按钮`,
-                           'Hello World！',
-                           [
-                               {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                               {text: '确定', onPress: () => console.log('OK Pressed')},
-                           ]
-                       )
-                   }
-                }>
-                    <Text style={{ color: 'red', fontFamily:'iconfont',fontSize: 30 }}>&#xe69e;</Text>
+                <TouchableOpacity style={[styles.cellStyle,styles.bg1]} onPress={this.onPressCallback}>
+                    <Text style={styles.iconStyle}>&#xe69e;</Text>
+                    <Text style={styles.txtStyle}>衣服</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.iconStyle} onPress={
-                   ()=> {
-                       Alert.alert(
-                           `你点击了按钮`,
-                           'Hello World！',
-                           [
-                               {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                               {text: '确定', onPress: () => console.log('OK Pressed')},
-                           ]
-                       )
-                   }
-                }>
-                        <Text style={styles.txtStyle}>&#xe780;</Text>
+                <TouchableOpacity style={[styles.cellStyle,styles.bg2]} onPress={this.onPressCallback}>
+                    <Text style={styles.iconStyle}>&#xe780;</Text>
+                    <Text style={styles.txtStyle}>食品</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.colStyle}>
+                <TouchableOpacity style={[styles.cellStyle,styles.bg3]} onPress={this.onPressCallback}>
+                    <Text style={styles.iconStyle}>&#xe6d9;</Text>
+                    <Text style={styles.txtStyle}>住房</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.cellStyle,styles.bg4]} onPress={this.onPressCallback}>
+                    <Text style={styles.iconStyle}>&#xe613;</Text>
+                    <Text style={styles.txtStyle}>出行</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.colStyle}>
+                <TouchableOpacity style={[styles.cellStyle,styles.bg5]} onPress={this.onPressCallback}>
+                    <Text style={styles.iconStyle}>&#xe60a;</Text>
+                    <Text style={styles.txtStyle}>生活用品</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.cellStyle,styles.bg6]} onPress={this.onPressCallback}>
+                    <Text style={styles.iconStyle}>&#xe611;</Text>
+                    <Text style={styles.txtStyle}>其他</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -114,14 +124,13 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#blue',
+    backgroundColor: '#D0E474',
   },
   toolbar: {
     backgroundColor: '#238E23',
     height: 56,
   },
   imgStyle: {
-    backgroundColor:'green',
     width:Dimensions.get('window').width,
     height:150
   },
@@ -129,15 +138,45 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  iconStyle: {
+  cellStyle: {
     flex: 1,
-    height: 100,
+    height: 120,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    flexDirection: 'row',
   },
   txtStyle: {
+    flex: 2,
     color: '#fff',
-  }
+    fontSize: 24,
+    marginLeft:10,
+    fontFamily:'Times'
+  },
+  iconStyle: {
+    color: '#fff',
+    fontFamily:'iconfont',
+    fontSize: 30,
+    flex: 1,
+    textAlign: 'right'
+  },
+  bg1: {
+    backgroundColor: '#D5E7A2'
+  },
+  bg2: {
+    backgroundColor: '#B2D061'
+  },
+  bg3: {
+    backgroundColor: '#DCC78E'
+  },
+  bg4: {
+    backgroundColor: '#B5B149'
+  },
+  bg5: {
+      backgroundColor: '#B48454'
+    },
+  bg6: {
+      backgroundColor: '#6A7E3D'
+    }
 });
 
 module.exports = IndexScreen;
