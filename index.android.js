@@ -26,6 +26,8 @@ var LoginScreen = require('./LoginScreen');
 var MainScreen = require('./MainScreen');
 var StoryScreen = require('./StoryScreen');
 var IndexScreen = require('./IndexScreen');
+var DetailScreen = require('./DetailScreen');
+var EditScreen = require('./EditScreen');
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', function() {
@@ -64,15 +66,33 @@ var RCTZhiHuDaily = React.createClass({
         </View>
       );
     } else if (route.name === 'index') {
-             return (
-               <View style={styles.container}>
-                 <IndexScreen
-                   style={{flex: 1}}
-                   navigator={navigationOperations}
-                  />
-               </View>
-             );
-           }
+         return (
+           <View style={styles.container}>
+             <IndexScreen
+               style={{flex: 1}}
+               navigator={navigationOperations}
+              />
+           </View>
+         );
+       } else if (route.name === 'detail') {
+          return (
+            <View style={styles.container}>
+              <DetailScreen
+                style={{flex: 1}}
+                navigator={navigationOperations}
+               />
+            </View>
+          );
+       }else if (route.name === 'edit') {
+          return (
+            <View style={styles.container}>
+              <EditScreen
+                style={{flex: 1}}
+                navigator={navigationOperations}
+               />
+            </View>
+          );
+       }
   },
   getInitialState: function() {
     return {

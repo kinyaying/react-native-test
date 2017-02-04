@@ -17,6 +17,9 @@ var {
   Dimensions,
 } = React;
 
+import DetailScreen from "./DetailScreen";
+import EditScreen from "./EditScreen";
+
 var Drawer = require('react-native-drawer');
 var StoriesList = require('./StoriesList');
 var ThemesList = require('./ThemesList');
@@ -27,7 +30,6 @@ var DRAWER_REF = 'drawer';
 var DRAWER_WIDTH_LEFT = 56;
 var toolbarActions = [
  {title:'weibo',icon:require('./image/icon_search.png'),show:'always'},
- {title:'blog',icon:require('./image/icon_scan.png'),show:'always'},
 ];
 
 var IndexScreen = React.createClass({
@@ -35,6 +37,15 @@ var IndexScreen = React.createClass({
     return ({
       theme: null,
     });
+  },
+  onActionSelected: function(position) {
+      const {navigator} = this.props;
+      if (navigator) {
+          navigator.push({
+              name: 'edit',
+              edit: EditScreen,
+          });
+      }
   },
   onSelectTheme: function(theme) {
     this.refs[DRAWER_REF].closeDrawer();
@@ -54,14 +65,13 @@ var IndexScreen = React.createClass({
     this.swipeRefreshLayout && this.swipeRefreshLayout.finishRefresh();
   },
   onPressCallback: function() {
-    Alert.alert(
-                               `你点击1111了按钮`,
-                               'Hello World！',
-                               [
-                                   {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                                   {text: '确定', onPress: () => console.log('OK Pressed')},
-                               ]
-                           )
+      const {navigator} = this.props;
+      if (navigator) {
+          navigator.push({
+              name: 'detail',
+              detail: DetailScreen,
+          });
+      }
   },
   render: function() {
     var title = '合肥';
@@ -124,7 +134,7 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'rgba(0,0,0,0)',
+    backgroundColor: '#238E23',
   },
   toolbar: {
     backgroundColor: '#238E23',
