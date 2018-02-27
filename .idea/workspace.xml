@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="db777a91-b93d-4143-a04b-dc6c303596b9" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/3.3.koa-bodyparser.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/4.1.static-server.js" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/3.2.post.js" afterPath="$PROJECT_DIR$/3.2.post.js" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-    </list>
+    <list default="true" id="db777a91-b93d-4143-a04b-dc6c303596b9" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -423,12 +416,12 @@
       <workItem from="1517887190434" duration="239000" />
       <workItem from="1517901012282" duration="57000" />
       <workItem from="1518342183532" duration="6160000" />
-      <workItem from="1519717157189" duration="8033000" />
+      <workItem from="1519717157189" duration="8381000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16263000" />
+    <option name="totallyTimeSpent" value="16611000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="720" y="23" width="720" height="790" extended-state="0" />
